@@ -6,25 +6,29 @@ This middleware complements the Kentik agent by enabling mutual authentication f
 
 Follow these steps to install the middleware:
 
-1. **Download the ZIP package**: The ZIP package contains everything you need to set up the middleware on your server.
+1. **Download the ZIP package**: The ZIP package contains everything you need to set up the middleware on your server. 
+```
+curl -L https://github.com/GustavoPerezYSSY/inter-middleware/releases/download/v1.0/yssy-mutuauth-middleware-v1-0-0.zip -o yssy-mutuauth-middleware-v1-0-0.zip
+```
+
 
 2. **Extract the ZIP package**: Use the `unzip` command to extract the contents of the ZIP file to your current working directory. The command syntax is `unzip [file to unzip]`.
 
 3. **Change directory to the extracted folder**: Use the `cd` command to navigate into the directory that was created when you extracted the ZIP file.
 
-4. **Set execute permission to the shell scripts**: Before you can run the shell scripts, you need to give them execute permissions. You can do this with the following command: `chmod +x install.sh uninstall.sh`.
+5. **Set execute permission to the shell scripts**: Before you can run the shell scripts, you need to give them execute permissions. You can do this with the following command: `chmod +x install.sh uninstall.sh`.
 
-5. **Run the install.sh script**: This script sets up everything you need for the middleware to run. Execute the script by using the command `./install.sh`.
+6. **Run the install.sh script**: This script sets up everything you need for the middleware to run. Execute the script by using the command `./install.sh`.
     - The `install.sh` script does the following:
         - It creates a directory at `/opt/yssy-mutuauth-middleware` and extracts the contents of `setup.zip` to this directory.
         - It sets up the middleware as a service that automatically starts on system boot.
         - It attempts to open the `settings.json` file for editing using the nano text editor. If nano is not installed on your system, it falls back to the vi editor.
 
-6. **Edit the settings.json file**: Once the `install.sh` script completes its run, you need to edit the `settings.json` file to set your specific configuration parameters.
+7. **Edit the settings.json file**: Once the `install.sh` script completes its run, you need to edit the `settings.json` file to set your specific configuration parameters.
 
-7. **Start the middleware service**: The `install.sh` script sets up the middleware as a service. You can start it with the command `systemctl start yssy-mutuauth-middleware`.
+8. **Start the middleware service**: The `install.sh` script sets up the middleware as a service. You can start it with the command `systemctl start yssy-mutuauth-middleware`.
 
-8. **Check the status of the service**: Use the `systemctl status yssy-mutuauth-middleware` to make sure the service is running as expected.
+9. **Check the status of the service**: Use the `systemctl status yssy-mutuauth-middleware` to make sure the service is running as expected.
 
 The middleware should now be running on your server and ready to handle mutual authentication for your endpoints.
 
@@ -186,3 +190,44 @@ Example: `"keyFile": "/path/to/your/key"`
 This is a string representing the file path to the Certificate Authority (CA) bundle file for mutual authentication with the destination server. The middleware service will use this CA bundle when forwarding the request.
 
 Example: `"caFile": "/path/to/your/ca"`
+
+## Yssy-MutuAuth Middleware Diagnostics
+This guide provides steps for diagnosing and troubleshooting the Yssy-MutuAuth Middleware.
+
+### Service Management
+The Yssy-MutuAuth Middleware runs as a system service, which means you can manage it using the systemctl command. Here are some useful commands:
+
+#### Stop the service:
+`sudo systemctl stop yssy-mutuauth-middleware.service`
+
+#### Start the service:
+`sudo systemctl start yssy-mutuauth-middleware.service`
+
+#### Disable the service:
+`sudo systemctl disable yssy-mutuauth-middleware.service`
+
+#### Enable the service:
+`sudo systemctl enable yssy-mutuauth-middleware.service`
+
+#### Installation and Uninstallation
+Uninstall: If you need to uninstall the middleware, simply run the uninstall.sh script. This will remove the service and all related files.
+`sh ./uninstall.sh`
+
+`sh ./install.sh`
+
+#### Logs Inspection
+The middleware logs can be inspected using the journalctl command:
+
+`journalctl -fu yssy-mutuauth-middleware.service`
+
+#### Reviewing Configuration
+The middleware configuration is stored in settings.json. This file is key to configuring the middleware and its behavior. If you're experiencing issues, it's a good idea to review this file for any misconfigurations.
+
+#### Understanding Route Concepts
+The middleware acts as a bridge between the Kentik agent and the target endpoints, handling secure requests and responses. In the settings.json file, the destinationRoutes section is used to define the routes from the middleware to the endpoints. Each object in the destinationRoutes array represents a destination route, specifying the properties for each route such as originHostname, destinationHostname, destinationPort, and paths to the certFile, keyFile, and caFile.
+
+![Middleware Routes](middleware-routes.png)
+
+For instance, if an incoming request matches the originHostname, the middleware service will forward the request to the destination specified by the destinationHostname and destinationPort. The certFile, keyFile, and caFile are used for mutual authentication with the destination server. The middleware will use these files when forwarding the request.
+
+If you're experiencing issues, ensure that these settings are correctly configured to establish the desired routes.
