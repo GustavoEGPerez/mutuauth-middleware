@@ -1,6 +1,6 @@
 # HTTPS Mutual Authentication Middleware
 
-This middleware complements the Kentik agent by enabling mutual authentication for endpoints that require it. It acts as a bridge between the Kentik agent and the target endpoints, handling secure requests and responses. The middleware manages mutual authentication processes, allowing the Kentik agent to focus solely on its main function: collecting information from the monitored endpoints. Configurable via a settings.json file and equipped with robust logging features, it extends the Kentik agent's capabilities while ensuring ease of maintenance and troubleshooting.
+This middleware complements observability services like Kentik by enabling mutual authentication for endpoints that require it. It acts as a bridge between the Kentik agent and the target endpoints, handling secure requests and responses. The middleware manages mutual authentication processes, allowing the Kentik agent to focus solely on its main function: collecting information from the monitored endpoints. Configurable via a settings.json file and equipped with robust logging features, it extends the Kentik agent's capabilities while ensuring ease of maintenance and troubleshooting.
 
 ## Installation Instructions for the Middleware using the ZIP package
 
