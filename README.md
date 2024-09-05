@@ -10,7 +10,7 @@ Follow these steps to install the middleware:
 
 1. **Download the ZIP package**: The ZIP package contains everything you need to set up the middleware on your server. 
 ```
-curl -L https://github.com/GustavoPerezYSSY/inter-middleware/releases/download/v1.0/yssy-mutuauth-middleware-v1-0-0.zip -o yssy-mutuauth-middleware-v1-0-0.zip
+curl -L (base-url-repo)/inter-middleware/releases/download/v1.0/mutuauth-middleware-v1-0-0.zip -o mutuauth-middleware-v1-0-0.zip
 ```
 
 
@@ -22,21 +22,21 @@ curl -L https://github.com/GustavoPerezYSSY/inter-middleware/releases/download/v
 
 6. **Run the install.sh script**: This script sets up everything you need for the middleware to run. Execute the script by using the command `./install.sh`.
     - The `install.sh` script does the following:
-        - It creates a directory at `/opt/yssy-mutuauth-middleware` and extracts the contents of `setup.zip` to this directory.
+        - It creates a directory at `/opt/mutuauth-middleware` and extracts the contents of `setup.zip` to this directory.
         - It sets up the middleware as a service that automatically starts on system boot.
         - It attempts to open the `settings.json` file for editing using the nano text editor. If nano is not installed on your system, it falls back to the vi editor.
 
 7. **Edit the settings.json file**: Once the `install.sh` script completes its run, you need to edit the `settings.json` file to set your specific configuration parameters.
 
-8. **Start the middleware service**: The `install.sh` script sets up the middleware as a service. You can start it with the command `systemctl start yssy-mutuauth-middleware`.
+8. **Start the middleware service**: The `install.sh` script sets up the middleware as a service. You can start it with the command `systemctl start mutuauth-middleware`.
 
-9. **Check the status of the service**: Use the `systemctl status yssy-mutuauth-middleware` to make sure the service is running as expected.
+9. **Check the status of the service**: Use the `systemctl status mutuauth-middleware` to make sure the service is running as expected.
 
 The middleware should now be running on your server and ready to handle mutual authentication for your endpoints.
 
 ## Uninstallation Instructions
 
-To uninstall the middleware, you simply need to run the `uninstall.sh` script with the command `./uninstall.sh`. This script will stop the middleware service, disable it from running at startup, and remove the `/opt/yssy-mutuauth-middleware` directory and its contents.
+To uninstall the middleware, you simply need to run the `uninstall.sh` script with the command `./uninstall.sh`. This script will stop the middleware service, disable it from running at startup, and remove the `/opt/mutuauth-middleware` directory and its contents.
 
 
 ## Configuration Guide for `settings.json`
@@ -193,23 +193,23 @@ This is a string representing the file path to the Certificate Authority (CA) bu
 
 Example: `"caFile": "/path/to/your/ca"`
 
-## Yssy-MutuAuth Middleware Diagnostics
-This guide provides steps for diagnosing and troubleshooting the Yssy-MutuAuth Middleware.
+## MutuAuth Middleware Diagnostics
+This guide provides steps for diagnosing and troubleshooting the MutuAuth Middleware.
 
 ### Service Management
-The Yssy-MutuAuth Middleware runs as a system service, which means you can manage it using the systemctl command. Here are some useful commands:
+The MutuAuth Middleware runs as a system service, which means you can manage it using the systemctl command. Here are some useful commands:
 
 #### Stop the service:
-`sudo systemctl stop yssy-mutuauth-middleware.service`
+`sudo systemctl stop mutuauth-middleware.service`
 
 #### Start the service:
-`sudo systemctl start yssy-mutuauth-middleware.service`
+`sudo systemctl start mutuauth-middleware.service`
 
 #### Disable the service:
-`sudo systemctl disable yssy-mutuauth-middleware.service`
+`sudo systemctl disable mutuauth-middleware.service`
 
 #### Enable the service:
-`sudo systemctl enable yssy-mutuauth-middleware.service`
+`sudo systemctl enable mutuauth-middleware.service`
 
 #### Installation and Uninstallation
 Uninstall: If you need to uninstall the middleware, simply run the uninstall.sh script. This will remove the service and all related files.
@@ -220,7 +220,7 @@ Uninstall: If you need to uninstall the middleware, simply run the uninstall.sh 
 #### Logs Inspection
 The middleware logs can be inspected using the journalctl command:
 
-`journalctl -fu yssy-mutuauth-middleware.service`
+`journalctl -fu mutuauth-middleware.service`
 
 #### Reviewing Configuration
 The middleware configuration is stored in settings.json. This file is key to configuring the middleware and its behavior. If you're experiencing issues, it's a good idea to review this file for any misconfigurations.
